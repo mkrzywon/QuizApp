@@ -41,7 +41,7 @@
         <EditText
             android:id="@+id/name_field"
             style="@style/edit_text"
-            android:layout_above="@id/linear1"
+            android:layout_below="@id/quiz_name"
             android:layout_margin="@dimen/standard"
             android:background="@drawable/edit_text"
             android:hint="@string/please"
@@ -51,7 +51,9 @@
         <LinearLayout
             android:id="@+id/linear1"
             style="@style/container_buttons_layout_front"
+            android:layout_below="@id/name_field"
             android:layout_alignParentBottom="true"
+            android:gravity="bottom"
             android:layout_marginBottom="@dimen/standard"
             android:layout_marginEnd="@dimen/standard"
             android:layout_marginStart="@dimen/standard"
