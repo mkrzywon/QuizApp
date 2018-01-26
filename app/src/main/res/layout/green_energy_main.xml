@@ -164,7 +164,6 @@
                         android:layout_centerVertical="true"
                         android:background="@drawable/edit_text_question"
                         android:hint="@string/youranswer"
-                        android:imeOptions="actionDone"
                         android:inputType="text"
                         android:padding="@dimen/quarter" />
 

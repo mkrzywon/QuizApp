@@ -13,11 +13,11 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -162,13 +162,10 @@ public class PollutionQuiz extends MainActivity {
         }, 1000);
 
         // Attach CheckedChangeListener to EditText.
-        textviewedit.setOnKeyListener(new OnKeyListener() {
-            public boolean onKey(View view, int keyCode, KeyEvent keyevent) {
-                //If the keyevent is a key-down event on the "enter" button
-                if ((keyevent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    //...
+        textviewedit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                     setTextViewEdit();
-                    return true;
                 }
                 return false;
             }
