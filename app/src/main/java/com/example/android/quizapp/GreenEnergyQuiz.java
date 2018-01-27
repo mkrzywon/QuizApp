@@ -93,6 +93,7 @@ public class GreenEnergyQuiz extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.green_energy_main);
 
+        //Initialization of main view components
         viewComponents();
         viewHiddenComponents();
         setQuestion();

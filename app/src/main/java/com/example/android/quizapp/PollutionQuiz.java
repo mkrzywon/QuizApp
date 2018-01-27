@@ -93,6 +93,7 @@ public class PollutionQuiz extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pollution_main);
 
+        //Initialization of main view components
         viewComponents();
         viewHiddenComponents();
         setQuestion();
