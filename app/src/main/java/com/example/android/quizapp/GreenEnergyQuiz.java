@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 public class GreenEnergyQuiz extends MainActivity {
 
+    //Declaration of values used in onSaveInstanceState and onRestoreInstanceState methods
     private static final String KEY_QUESTION_NO = "LevelQuestionNo";
     private static final String KEY_SCORE = "LevelScoreValue";
     private static final String KEY_NEXT_BUTTON_VISIBILITY = "nextButtonVisibility";
@@ -39,6 +40,15 @@ public class GreenEnergyQuiz extends MainActivity {
     private static final String KEY_EXCLAMATION_MARK_VISIBILITY = "exclamationMarkVisibility";
     private static final String KEY_CORRECT_VISIBILITY = "correctVisibility";
     private static final String KEY_WRONG_VISIBILITY = "wrongVisibility";
+    private static final String KEY_CHECK_BOX1_STATE = "checkBox1state";
+    private static final String KEY_CHECK_BOX2_STATE = "checkBox2state";
+    private static final String KEY_CHECK_BOX3_STATE = "checkBox3state";
+    private static final String KEY_CHECK_BOX4_STATE = "checkBox4state";
+    private static final String KEY_RADIO_BUTTON1_STATE = "radioButton1state";
+    private static final String KEY_RADIO_BUTTON2_STATE = "radioButton2state";
+    private static final String KEY_RADIO_BUTTON3_STATE = "radioButton3state";
+    private static final String KEY_RADIO_BUTTON4_STATE = "radioButton4state";
+
     //Delclaration of array containing questions numbers and related values:
     //1.: question's image
     //2.: question
@@ -83,93 +93,10 @@ public class GreenEnergyQuiz extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.green_energy_main);
 
-        //Initialization of main scene components and their visibility.
-        questionInfo = findViewById(R.id.questionInfo);
-        quizQuestion = findViewById(R.id.quizQuestion);
-        correct = findViewById(R.id.correct);
-        correct.setVisibility(View.INVISIBLE);
-        wrong = findViewById(R.id.wrong);
-        wrong.setVisibility(View.INVISIBLE);
-
-        backgroundImage = findViewById(R.id.backgroundImage);
-        backgroundImage.setVisibility(View.INVISIBLE);
-        checkmark = findViewById(R.id.checkmark);
-        checkmark.setVisibility(View.INVISIBLE);
-        exclamationMark = findViewById(R.id.exclamationMark);
-        exclamationMark.setVisibility(View.INVISIBLE);
-        nextButton = findViewById(R.id.nextButton);
-        nextButton.setVisibility(View.INVISIBLE);
-        submitButton = findViewById(R.id.submitButton);
-        submitButton.setVisibility(View.INVISIBLE);
-        resetButton = findViewById(R.id.resetButton);
-        resetButton.setVisibility(View.INVISIBLE);
-
-        rb1 = findViewById(R.id.rb1);
-        rb2 = findViewById(R.id.rb2);
-        rb3 = findViewById(R.id.rb3);
-        rb4 = findViewById(R.id.rb4);
-
-        checkbox1 = findViewById(R.id.checkbox1);
-        checkbox2 = findViewById(R.id.checkbox2);
-        checkbox3 = findViewById(R.id.checkbox3);
-        checkbox4 = findViewById(R.id.checkbox4);
-
-        textquestion1 = findViewById(R.id.textquestion1);
-        textquestion2 = findViewById(R.id.textquestion2);
-        textquestion3 = findViewById(R.id.textquestion3);
-        textquestion4 = findViewById(R.id.textquestion4);
-
-        textviewedit = findViewById(R.id.textviewedit);
-
-        //Array gets the data from arrays.xml file in res/values folder.
-        doubleArray[1] = getResources().getStringArray(R.array.Question1);
-        doubleArray[2] = getResources().getStringArray(R.array.Question2);
-        doubleArray[3] = getResources().getStringArray(R.array.Question3);
-        doubleArray[4] = getResources().getStringArray(R.array.Question4);
-        doubleArray[5] = getResources().getStringArray(R.array.Question5);
-        doubleArray[6] = getResources().getStringArray(R.array.Question6);
-        doubleArray[7] = getResources().getStringArray(R.array.Question7);
-        doubleArray[8] = getResources().getStringArray(R.array.Question8);
-        doubleArray[9] = getResources().getStringArray(R.array.Question9);
-        doubleArray[10] = getResources().getStringArray(R.array.Question10);
-
+        viewComponents();
+        viewHiddenComponents();
         setQuestion();
-
-
-        // Initialize Radio Group and attach click handler.
-        rg = findViewById(R.id.rg);
-
-        // Attach CheckedChangeListener to radio group.
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rb = group.findViewById(checkedId);
-                if (null != rb && checkedId > -1) {
-                    onClickCheck();
-                    rg.clearCheck();
-                }
-            }
-        });
-
-        //Displays question's image with delay of 1s.
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Show image after 1000ms
-                backgroundImage.setVisibility(View.VISIBLE);
-            }
-        }, 1000);
-
-        // Attach CheckedChangeListener to EditText.
-        textviewedit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    setTextViewEdit();
-                }
-                return false;
-            }
-        });
+        setListeners();
 
     }
 
@@ -182,14 +109,14 @@ public class GreenEnergyQuiz extends MainActivity {
 
         savedInstanceState.putInt(KEY_QUESTION_NO, questionNo);
         savedInstanceState.putInt(KEY_SCORE, score);
-        savedInstanceState.putBoolean("checkBox1State", checkbox1.isEnabled());
-        savedInstanceState.putBoolean("checkBox2State", checkbox2.isEnabled());
-        savedInstanceState.putBoolean("checkBox3State", checkbox3.isEnabled());
-        savedInstanceState.putBoolean("checkBox4State", checkbox4.isEnabled());
-        savedInstanceState.putBoolean("radioButton1State", rb1.isEnabled());
-        savedInstanceState.putBoolean("radioButton2State", rb2.isEnabled());
-        savedInstanceState.putBoolean("radioButton3State", rb3.isEnabled());
-        savedInstanceState.putBoolean("radioButton4State", rb4.isEnabled());
+        savedInstanceState.putBoolean(KEY_CHECK_BOX1_STATE, checkbox1.isEnabled());
+        savedInstanceState.putBoolean(KEY_CHECK_BOX2_STATE, checkbox2.isEnabled());
+        savedInstanceState.putBoolean(KEY_CHECK_BOX3_STATE, checkbox3.isEnabled());
+        savedInstanceState.putBoolean(KEY_CHECK_BOX4_STATE, checkbox4.isEnabled());
+        savedInstanceState.putBoolean(KEY_RADIO_BUTTON1_STATE, rb1.isEnabled());
+        savedInstanceState.putBoolean(KEY_RADIO_BUTTON2_STATE, rb2.isEnabled());
+        savedInstanceState.putBoolean(KEY_RADIO_BUTTON3_STATE, rb3.isEnabled());
+        savedInstanceState.putBoolean(KEY_RADIO_BUTTON4_STATE, rb4.isEnabled());
 
         if (nextButton != null) {
             savedInstanceState.putInt(KEY_NEXT_BUTTON_VISIBILITY, nextButton.getVisibility());
@@ -230,14 +157,14 @@ public class GreenEnergyQuiz extends MainActivity {
 
         questionNo = savedInstanceState.getInt(KEY_QUESTION_NO);
         score = savedInstanceState.getInt(KEY_SCORE);
-        checkbox1.setEnabled(savedInstanceState.getBoolean("checkBox1State"));
-        checkbox2.setEnabled(savedInstanceState.getBoolean("checkBox2State"));
-        checkbox3.setEnabled(savedInstanceState.getBoolean("checkBox3State"));
-        checkbox4.setEnabled(savedInstanceState.getBoolean("checkBox4State"));
-        rb1.setEnabled(savedInstanceState.getBoolean("radioButton1State"));
-        rb2.setEnabled(savedInstanceState.getBoolean("radioButton2State"));
-        rb3.setEnabled(savedInstanceState.getBoolean("radioButton3State"));
-        rb4.setEnabled(savedInstanceState.getBoolean("radioButton4State"));
+        checkbox1.setEnabled(savedInstanceState.getBoolean(KEY_CHECK_BOX1_STATE));
+        checkbox2.setEnabled(savedInstanceState.getBoolean(KEY_CHECK_BOX2_STATE));
+        checkbox3.setEnabled(savedInstanceState.getBoolean(KEY_CHECK_BOX3_STATE));
+        checkbox4.setEnabled(savedInstanceState.getBoolean(KEY_CHECK_BOX4_STATE));
+        rb1.setEnabled(savedInstanceState.getBoolean(KEY_RADIO_BUTTON1_STATE));
+        rb2.setEnabled(savedInstanceState.getBoolean(KEY_RADIO_BUTTON2_STATE));
+        rb3.setEnabled(savedInstanceState.getBoolean(KEY_RADIO_BUTTON3_STATE));
+        rb4.setEnabled(savedInstanceState.getBoolean(KEY_RADIO_BUTTON4_STATE));
         nextButton.setVisibility(savedInstanceState.getInt(KEY_NEXT_BUTTON_VISIBILITY, nextButton.getVisibility()));
         resetButton.setVisibility(savedInstanceState.getInt(KEY_RESET_BUTTON_VISIBILITY, resetButton.getVisibility()));
         submitButton.setVisibility(savedInstanceState.getInt(KEY_SUBMIT_BUTTON_VISIBILITY, submitButton.getVisibility()));
@@ -250,6 +177,105 @@ public class GreenEnergyQuiz extends MainActivity {
 
     }
 
+    //This method determines the path to hidden components.
+    public void viewHiddenComponents () {
+
+        correct = findViewById(R.id.correct);
+        correct.setVisibility(View.INVISIBLE);
+        wrong = findViewById(R.id.wrong);
+        wrong.setVisibility(View.INVISIBLE);
+
+        backgroundImage = findViewById(R.id.backgroundImage);
+        backgroundImage.setVisibility(View.INVISIBLE);
+        checkmark = findViewById(R.id.checkmark);
+        checkmark.setVisibility(View.INVISIBLE);
+        exclamationMark = findViewById(R.id.exclamationMark);
+        exclamationMark.setVisibility(View.INVISIBLE);
+        nextButton = findViewById(R.id.nextButton);
+        nextButton.setVisibility(View.INVISIBLE);
+        submitButton = findViewById(R.id.submitButton);
+        submitButton.setVisibility(View.INVISIBLE);
+        resetButton = findViewById(R.id.resetButton);
+        resetButton.setVisibility(View.INVISIBLE);
+
+    }
+
+    //This method determines the path of main scene components.
+    public void viewComponents () {
+
+        questionInfo = findViewById(R.id.questionInfo);
+        quizQuestion = findViewById(R.id.quizQuestion);
+
+        rb1 = findViewById(R.id.rb1);
+        rb2 = findViewById(R.id.rb2);
+        rb3 = findViewById(R.id.rb3);
+        rb4 = findViewById(R.id.rb4);
+
+        checkbox1 = findViewById(R.id.checkbox1);
+        checkbox2 = findViewById(R.id.checkbox2);
+        checkbox3 = findViewById(R.id.checkbox3);
+        checkbox4 = findViewById(R.id.checkbox4);
+
+        textquestion1 = findViewById(R.id.textquestion1);
+        textquestion2 = findViewById(R.id.textquestion2);
+        textquestion3 = findViewById(R.id.textquestion3);
+        textquestion4 = findViewById(R.id.textquestion4);
+
+        textviewedit = findViewById(R.id.textviewedit);
+
+        //Array gets the data from arrays.xml file in res/values folder.
+        doubleArray[1] = getResources().getStringArray(R.array.Question1);
+        doubleArray[2] = getResources().getStringArray(R.array.Question2);
+        doubleArray[3] = getResources().getStringArray(R.array.Question3);
+        doubleArray[4] = getResources().getStringArray(R.array.Question4);
+        doubleArray[5] = getResources().getStringArray(R.array.Question5);
+        doubleArray[6] = getResources().getStringArray(R.array.Question6);
+        doubleArray[7] = getResources().getStringArray(R.array.Question7);
+        doubleArray[8] = getResources().getStringArray(R.array.Question8);
+        doubleArray[9] = getResources().getStringArray(R.array.Question9);
+        doubleArray[10] = getResources().getStringArray(R.array.Question10);
+
+    }
+
+    //This method sets the listeners for EditText and RadioButtons and also determines behavior of question image.
+    public void setListeners () {
+
+        // Initialize Radio Group and attach click handler.
+        rg = findViewById(R.id.rg);
+
+        // Attach CheckedChangeListener to radio group.
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = group.findViewById(checkedId);
+                if (null != rb && checkedId > -1) {
+                    onClickCheck();
+                    rg.clearCheck();
+                }
+            }
+        });
+
+        //Displays question's image with delay of 1s.
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Show image after 1000ms
+                backgroundImage.setVisibility(View.VISIBLE);
+            }
+        }, 1000);
+
+        // Attach CheckedChangeListener to EditText.
+        textviewedit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    setTextViewEdit();
+                }
+                return false;
+            }
+        });
+    }
 
     //This method sets the behavior of the next button and view for each question.
     @TargetApi(Build.VERSION_CODES.O)
