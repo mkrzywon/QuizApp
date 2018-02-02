@@ -103,11 +103,13 @@ http://www.pngmart.com/image/28689
 
 http://www.pngmart.com/image/33077
 
-
 ### Sounds:
 
 www.soundsboom.com
 
+### Fonts:
+
+http://www.1001fonts.com/free-fonts-for-commercial-use.html
 
 ### Other inspirational sources:
 
