@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 public class GreenEnergyQuiz extends MainActivity {
 
-    //Declaration of values used in onSaveInstanceState and onRestoreInstanceState methods
+    //Declaration of values used in onSaveInstanceState and onRestoreInstanceState methods.
     private static final String KEY_QUESTION_NO = "LevelQuestionNo";
     private static final String KEY_SCORE = "LevelScoreValue";
     private static final String KEY_NEXT_BUTTON_VISIBILITY = "nextButtonVisibility";
