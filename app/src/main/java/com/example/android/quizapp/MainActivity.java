@@ -15,14 +15,12 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView quizName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        quizName = findViewById(R.id.quiz_name);
+        TextView quizName = findViewById(R.id.quiz_name);
 
         //Makes the animation of quiz name
         ObjectAnimator anim = ObjectAnimator.ofFloat(quizName, "Alpha", 0, 1);

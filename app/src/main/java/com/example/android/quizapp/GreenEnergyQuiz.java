@@ -1,5 +1,6 @@
 package com.example.android.quizapp;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
@@ -30,7 +31,7 @@ import android.widget.Toast;
 
 public class GreenEnergyQuiz extends MainActivity {
 
-    //Declaration of values used in onSaveInstanceState and onRestoreInstanceState methods..
+    //Declaration of values used in onSaveInstanceState and onRestoreInstanceState methods
     private static final String KEY_QUESTION_NO = "LevelQuestionNo";
     private static final String KEY_SCORE = "LevelScoreValue";
     private static final String KEY_NEXT_BUTTON_VISIBILITY = "nextButtonVisibility";
@@ -57,7 +58,7 @@ public class GreenEnergyQuiz extends MainActivity {
     //5.: answer 3
     //6.: answer 4
     //7.: correct answer
-    String[][] doubleArray = new String[11][7];
+    private final String[][] doubleArray = new String[11][7];
     //First value of questions numbering
     private int questionNo = 1;
     //Initial value of score numbering
@@ -179,7 +180,7 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method determines the path to hidden components.
-    public void viewHiddenComponents () {
+    private void viewHiddenComponents () {
 
         correct = findViewById(R.id.correct);
         correct.setVisibility(View.INVISIBLE);
@@ -202,7 +203,7 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method determines the path of main scene components.
-    public void viewComponents () {
+    private void viewComponents () {
 
         questionInfo = findViewById(R.id.questionInfo);
         quizQuestion = findViewById(R.id.quizQuestion);
@@ -239,17 +240,18 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method sets the listeners for EditText and RadioButtons and also determines behavior of question image.
-    public void setListeners () {
+    private void setListeners () {
 
         // Initialize Radio Group and attach click handler.
         rg = findViewById(R.id.rg);
 
         // Attach CheckedChangeListener to radio group.
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton rb = group.findViewById(checkedId);
-                if (null != rb && checkedId > -1) {
+                if (rb != null && checkedId > -1) {
                     onClickCheck();
                     rg.clearCheck();
                 }
@@ -318,23 +320,23 @@ public class GreenEnergyQuiz extends MainActivity {
 
     //This method set the next question's view.
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void setQuestion() {
+    private void setQuestion() {
 
         questionInfo.setText((getString(R.string.question_no) + questionNo));
         quizQuestion.setText(doubleArray[questionNo][1]);
-        setRadio_group_main();
+        setRadioGroupMain();
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Show image after 1000ms
-                setBackground_image();
+                setBackgroundImage();
             }
         }, 1000);
     }
 
     //This method gets the path of the image as a string.
-    public void setBackground_image() {
+    private void setBackgroundImage() {
 
         String uri = getString(R.string.drawable) + doubleArray[questionNo][0];
         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
@@ -342,7 +344,7 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method set the behavior of RadioButtons and CheckBoxes.
-    public void setRadio_group_main() {
+    private void setRadioGroupMain() {
 
         //RadioButtons are visible until the last question.
         if (questionNo <= 8) {
@@ -399,7 +401,7 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method checks the answers and sets the behavior of RadioButtons.
-    public void onClickCheck() {
+    private void onClickCheck() {
 
         //The answer which was chosen.
         String chosenAnswer;
@@ -610,7 +612,7 @@ public class GreenEnergyQuiz extends MainActivity {
 
     //This method checks the answer for Edittext field.
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setTextViewEdit() {
+    private void setTextViewEdit() {
 
         EditText textViewEdit = findViewById(R.id.textviewedit);
         String editAnswer = textViewEdit.getText().toString();
@@ -695,7 +697,7 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method set the behavior of additional components and bottom buttons after the correct answer.
-    public void correctAnswerSubmitted() {
+    private void correctAnswerSubmitted() {
 
         //Sets the animation for components
         findViewById(R.id.checkmark).setVisibility(View.VISIBLE);
@@ -739,7 +741,7 @@ public class GreenEnergyQuiz extends MainActivity {
     }
 
     //This method set the behavior of additional components and bottom buttons after the wrong answer.
-    public void wrongAnswerSubmitted() {
+    private void wrongAnswerSubmitted() {
 
         findViewById(R.id.exclamationMark).setVisibility(View.VISIBLE);
         TranslateAnimation animation = new TranslateAnimation(0, 0, 2000, 0);
