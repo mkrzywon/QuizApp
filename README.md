@@ -16,6 +16,11 @@ Main features:
 - The question data are derived from separate array xml file. 
 - Question number, score, state of buttons and check boxes, position of control buttons and correct – wrong alerts are saved in case of screen rotation.
 
+<p align="middle">
+  <img src="../master/app/src/main/res/raw/portrait1.jpg" width="400" />
+  <img src="../master/app/src/main/res/raw/portrait2.jpg" width="400" /> 
+</p>
+
 # Credits
 
 ### Images:
@@ -98,11 +103,13 @@ http://www.pngmart.com/image/28689
 
 http://www.pngmart.com/image/33077
 
-
 ### Sounds:
 
 www.soundsboom.com
 
+### Fonts:
+
+http://www.1001fonts.com/free-fonts-for-commercial-use.html
 
 ### Other inspirational sources:
 
